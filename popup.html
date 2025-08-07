@@ -1,24 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoSaverPlus Popup</title>
+  <link rel="stylesheet" href="/css/popup.css"/>
+</head>
+<body>
 
-<body style="min-width: 300px">
-    <div class="rsaver">
-        Enter your group game placeid.
-        <br>
-        Currect placeid: <span id="rsaver-currect-placeid">-</span>
-        <br>
-        <input type="number" id="rsaver-placeid">
-        <button type="button" id="rsaver-save">Save</button>
-        <br>
-        <br>
-        <br>
+  <div class="rosaver-container">
+    <div class="status"></div>
+    <div class="title">RoSaverPlus</div>
+    <div class="subtitle">Current place id: <span id="rs-current-placeid"></span></div>
+    <div class="input">
+      <label for="rs-placeid">New place ID</label>
+      <input type="number" id="rs-placeid" placeholder="Put your place ID here" />
+      <br />
+      <button type="button" id="rs-save">Save</button>
     </div>
 
-    <script src="js/jquery.js"></script>
-    <script src="js/popup.js"></script>
-    <script>
-        // $().append
-    </script>
-</body>
+    <div class="options">
+      <div class="option">
+        <label for="rs-bypass">Options</label>
+        <button id="rs-bypass"></button>
+        <span>Bypass website</span>
+      </div>
+      <button type="button" id="rs-reset">Reset</button>
+    </div>
 
+    <div class="footer">
+      <a href="https://github.com/hnguyen1910/rosaverplus" target="_blank" rel="noopener noreferrer">Source code</a>
+    </div>
+  </div>
+
+  <script src="js/default.js"></script>
+  <script src="js/jquery-3.7.1.min.js"></script>
+  <script src="js/popup.js"></script>
+</body>
 </html>

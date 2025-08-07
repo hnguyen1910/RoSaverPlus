@@ -1,0 +1,78 @@
+    .rosaver-container {
+    margin-top: 1rem;
+    }
+
+    .rosaver-container .title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: #000000;
+    text-align: center;
+    font-weight: bold;
+    }
+    .rosaver-container .subtitle {
+        font-size: 1rem;
+    }
+
+    .rosaver-container .input {
+    margin-top: 0.5rem;
+    }
+
+    .rosaver-container label {
+    font-size: 1rem;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 0.5rem;
+    }
+
+    .rosaver-container input[type="number"] {
+    padding: 0.5rem;
+    width: 300px;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    }
+
+    .rosaver-container .status {
+        color: #4f5050;
+        margin-bottom: 0.2rem;
+        display: none;
+    }
+
+    .rosaver-container button {
+    padding: 0.5rem;
+    font-size: 1rem;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    }
+    
+    .rosaver-container #rs-save {background-color: #056bd7;}
+    .rosaver-container #rs-reset {background-color: #ff0000;}
+    .rosaver-container #rs-save:hover {background-color: #0e3271;}
+    .rosaver-container #rs-reset:hover {background-color: #710e0e;}
+
+    #toggleBtn {
+    padding: 0.5rem;
+    background-color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    }
+    #status {
+        font-size: 1px;
+    }
+
+    .rosaver-container .option {
+        margin-bottom: 0.5rem;
+    }
+
+    .rosaver-container .footer {
+        font-size: 0.8rem;
+        font-weight: 300;
+        color:#4f5050;
+        text-align: center;
+    }

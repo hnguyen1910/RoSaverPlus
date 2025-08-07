@@ -1,44 +1,32 @@
-async function notification(title, message) {
-    await chrome.runtime.sendMessage({
-        type: "notification",
-        title: title,
-        message: message
-    })
-}
-
 (async () => {
     let storageData = await chrome.storage.local.get()
+    if (!storageData.totalSaved) storageData.totalSaved = 0
+    if (!storageData.placeid) storageData.placeid = "none"
+    if (typeof storageData.webBypass === "undefined") storageData.webBypass = true
+    chrome.storage.local.set(storageData)
 
-    function saveData(object) {
-        chrome.storage.local.set(object)
-    }
-
-    $("#rsaver-currect-placeid").text(storageData.placeid || 0)
+    $("#rs-current-placeid").text(storageData.placeid || "none")
     
-    $("#rsaver-save").on("click", () => {
-        if ($("#rsaver-placeid").val() === "") return
+    $("#rs-save").on("click", () => {
+        if ($("#rs-placeid").val() === "") return
 
-        storageData.placeid = parseInt($("#rsaver-placeid").val())
-        $("#rsaver-currect-placeid").text(storageData.placeid)
-        saveData(storageData)
-        notification("Success changing placeid", "Refresh the tab to apply changes")
-        window.location.reload()
+        storageData.placeid = parseInt($("#rs-placeid").val())
+        $("#rs-current-placeid").text(storageData.placeid)
+        chrome.storage.local.set(storageData)
+        $(".status").css("display", "block").text("Changed place ID successfully! Please refresh the tab to apply changes. ")
     })
 
-    let a = await fetch("https://raw.githubusercontent.com/Kelvinouo/RoSaver/master/news.txt").then(d => d.text())
-    $(".rsaver").append(a)
-
-    $("#simuna").on("click", () => {
-        chrome.tabs.create({
-            url: `https://discord.gg/frrQSPVajK`,
-            active: true
-        });
+    $("#rs-reset").on("click", () => {
+        chrome.storage.local.clear()
+        $("#rs-current-placeid").text("none")
+        $(".status").css("display", "block").text("Cleared storage successfully. ")
     })
 
-    $("#discord").on("click", () => {
-        chrome.tabs.create({
-            url: `https://discord.gg/Bc2yG4Ea52`,
-            active: true
-        });
-    })
+    $("#rs-bypass").text(storageData.webBypass ? "✔️" : "❌")
+    $("#rs-bypass").on("click", () => {
+        storageData.webBypass = !storageData.webBypass;
+        $("#rs-bypass").text(storageData.webBypass ? "✔️" : "❌")
+        chrome.storage.local.set(storageData)
+    });
+
 })();
