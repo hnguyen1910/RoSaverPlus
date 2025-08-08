@@ -18,9 +18,9 @@ function waitForElm(selector) {
     });
 };
 
-function makePurchase(rosaverPlaceID, productID, itemType, savedPrice, iswebBypass) {
-    if (iswebBypass) {window.open(`roblox://placeId=${rosaverPlaceID}&launchData=${productID},${itemType},${savedPrice}`)}
-    else {window.open(`https://www.roblox.com/games/start?placeId=${rosaverPlaceID}&launchData=${productID},${itemType},${savedPrice}`)}
+function makePurchase(rosaverPlaceID, productID, itemType, savedRobux, iswebBypass) {
+    if (iswebBypass) {window.open(`roblox://placeId=${rosaverPlaceID}&launchData=${productID},${itemType},${savedRobux}`)}
+    else {window.open(`https://www.roblox.com/games/start?placeId=${rosaverPlaceID}&launchData=${productID},${itemType},${savedRobux}`)}
     
 };
 
@@ -30,15 +30,17 @@ function makePurchase(rosaverPlaceID, productID, itemType, savedPrice, iswebBypa
     let storageData = await chrome.storage.local.get()
     let rosaverPlaceID = storageData.placeid
 
-    let requireRobux = await waitForElm(".text-robux-lg")
-    requireRobux = $(requireRobux).text().replace("Free","")
+    let spanRobux = await waitForElm(".text-robux-lg")
+    let requiredRobux = $(spanRobux).text().replace("Free","")
+    if (/[0-9]+(?:K|M|B)\+/g.test(requiredRobux)) requiredRobux = $(spanRobux).attr( "title" )
+
+    requiredRobux = requiredRobux.replace(",", "")
 
     let robuxContainer = $(".icon-robux-price-container")
-    if (requireRobux === "") return
+    if (requiredRobux === "") return
 
     let productID = window.location.toString().split("/")[4]
-    let price = requireRobux.replace(",", "")
-    let savedPrice
+    let savedRobux
 
     let itemType
     if ($(".icon-limited-label").length > 0 || $(".icon-limited-unique-label").length > 0) {
@@ -68,12 +70,12 @@ function makePurchase(rosaverPlaceID, productID, itemType, savedPrice, iswebBypa
     }
     
     if (itemType == 2) {
-        savedPrice = Math.floor(price * 0.1)
+        savedRobux = Math.floor(requiredRobux * 0.1)
     } else {
-        savedPrice = Math.floor(price * 0.4)
+        savedRobux = Math.floor(requiredRobux * 0.4)
     }
 
-    rosaverSaving.html(`(💰${savedPrice})`)
+    rosaverSaving.html(`(💰${savedRobux})`)
 
     console.log("ROSAVER IS READY FOR USE!")
 
@@ -94,14 +96,14 @@ function makePurchase(rosaverPlaceID, productID, itemType, savedPrice, iswebBypa
                 "color": "#fff"
             })
             clone.addClass("rsaver")
-            clone.html(`Save <span class="icon-robux-16x16 wait-for-i18n-format-render"></span> ${savedPrice}`)
+            clone.html(`Save <span class="icon-robux-16x16 wait-for-i18n-format-render"></span> ${savedRobux}`)
             clone.prependTo(confirmButton.parent())
             // confirmButton.remove()
             clone.on("click", (e) => {
                 e.preventDefault()
                 //if (confirmButton.text() == "Buy Now") {
                     $("div[role='dialog']").remove()
-                    makePurchase(rosaverPlaceID, productID, itemType, savedPrice, storageData.webBypass)
+                    makePurchase(rosaverPlaceID, productID, itemType, savedRobux, storageData.webBypass)
                 //}
             })
         }
